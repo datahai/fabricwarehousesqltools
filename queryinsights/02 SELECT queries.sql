@@ -3,7 +3,7 @@ SELECT
     COUNT(T.DateID) AS TripCount,
     SUM(T.PassengerCount) AS TotalPassengerCount
 FROM
-    dbo.Trip T;
+    dbo.FactTrip T;
 
 --joins
 SELECT
@@ -12,25 +12,25 @@ SELECT
     COUNT(T.DateID) AS TotalTripCount,
     SUM(T.PassengerCount) AS TotalPassengerCount
 FROM
-    dbo.Trip T
+    dbo.FactTrip T
 INNER JOIN
-    dbo.Date D ON D.DateID = T.DateID
+    dbo.DimDate D ON D.DateID = T.DateID
 GROUP BY
     D.Date,
     D.MonthName
 ORDER BY
     D.Date;
 
---joins with WHERE
+--joins with WHERE - January
 SELECT
     D.Date AS TripDate,
     D.MonthName,
     COUNT(T.DateID) AS TotalTripCount,
     SUM(T.PassengerCount) AS TotalPassengerCount
 FROM
-    dbo.Trip T
+    dbo.FactTrip T
 INNER JOIN
-    dbo.Date D ON D.DateID = T.DateID
+    dbo.DimDate D ON D.DateID = T.DateID
 WHERE D.MonthName = 'January'
 GROUP BY
     D.Date,
@@ -38,6 +38,22 @@ GROUP BY
 ORDER BY
     D.Date;
 
+--joins with WHERE - February
+SELECT
+    D.Date AS TripDate,
+    D.MonthName,
+    COUNT(T.DateID) AS TotalTripCount,
+    SUM(T.PassengerCount) AS TotalPassengerCount
+FROM
+    dbo.FactTrip T
+INNER JOIN
+    dbo.DimDate D ON D.DateID = T.DateID
+WHERE D.MonthName = 'February'
+GROUP BY
+    D.Date,
+    D.MonthName
+ORDER BY
+    D.Date;
 
 
 
@@ -57,13 +73,13 @@ SELECT
     SUM(T.TotalAmount) AS TotalAmount,
     SUM(W.PrecipitationInches) AS TotalRainFallInches
 FROM
-    dbo.Trip T
+    dbo.FactTrip T
 INNER JOIN
-    dbo.Date D ON D.DateID = T.DateID
+    dbo.DimDate D ON D.DateID = T.DateID
 INNER JOIN
-    dbo.Geography G ON G.GeographyID = T.PickupGeographyID
+    dbo.DimGeography G ON G.GeographyID = T.PickupGeographyID
 INNER JOIN 
-    dbo.Weather W ON W.DateID = T.DateID
+    dbo.DimWeather W ON W.DateID = T.DateID
 GROUP BY
     D.Date,
     D.MonthName,
@@ -94,13 +110,13 @@ SELECT
     SUM(T.TotalAmount) AS TotalAmount,
     SUM(W.PrecipitationInches) AS TotalRainFallInches
 FROM
-    dbo.Trip T
+    dbo.FactTrip T
 INNER JOIN
-    dbo.Date D ON D.DateID = T.DateID
+    dbo.DimDate D ON D.DateID = T.DateID
 INNER JOIN
-    dbo.Geography G ON G.GeographyID = T.PickupGeographyID
+    dbo.DimGeography G ON G.GeographyID = T.PickupGeographyID
 INNER JOIN 
-    dbo.Weather W ON W.DateID = T.DateID AND W.GeographyID = T.PickupGeographyID
+    dbo.DimWeather W ON W.DateID = T.DateID AND W.GeographyID = T.PickupGeographyID
 GROUP BY
     D.Date,
     D.MonthName,
