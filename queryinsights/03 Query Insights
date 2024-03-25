@@ -1,0 +1,16 @@
+SELECT * 
+FROM [queryinsights].[exec_requests_history] 
+ORDER BY start_time;
+
+--granular query execution
+SELECT
+    erh.distributed_statement_id,
+    erh.start_time,
+    erh.total_elapsed_time_ms,
+    erh.login_name,
+    erh.row_count,
+    erh.status,
+    erh.program_name,
+    erh.command
+FROM [queryinsights].[exec_requests_history] erh
+ORDER BY erh.start_time;
