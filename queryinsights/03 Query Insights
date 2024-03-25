@@ -15,3 +15,35 @@ SELECT
 FROM [queryinsights].[exec_requests_history] erh
 WHERE erh.distributed_statement_id = '7FF6C39F-57B7-4956-9A9C-64E8BE0E3C03'
 ORDER BY erh.start_time;
+
+--frequently run queries
+SELECT *
+FROM [queryinsights].[frequently_run_queries]
+ORDER BY last_run_start_time;
+
+--long running queries
+SELECT *
+FROM [queryinsights].[long_running_queries]
+ORDER BY last_run_start_time;
+
+--long running with execution history
+SELECT
+    --exetion history
+    erh.distributed_statement_id,
+    erh.start_time,
+    erh.total_elapsed_time_ms,
+    erh.login_name,
+    erh.row_count,
+    erh.status,
+    erh.program_name,
+    erh.command,
+    --long running queries metrics
+    lrq.median_total_elapsed_time_ms,
+    lrq.last_run_total_elapsed_time_ms,
+    lrq.last_run_start_time,
+    lrq.number_of_runs
+FROM [queryinsights].[exec_requests_history] erh
+INNER JOIN [queryinsights].[long_running_queries] lrq ON lrq.last_dist_statement_id = erh.distributed_statement_id
+WHERE erh.command LIKE '%COPY INTO%FactTrip%'
+ORDER BY erh.start_time;
+
