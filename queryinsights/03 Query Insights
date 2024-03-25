@@ -13,4 +13,5 @@ SELECT
     erh.program_name,
     erh.command
 FROM [queryinsights].[exec_requests_history] erh
+WHERE erh.distributed_statement_id = '7FF6C39F-57B7-4956-9A9C-64E8BE0E3C03'
 ORDER BY erh.start_time;
