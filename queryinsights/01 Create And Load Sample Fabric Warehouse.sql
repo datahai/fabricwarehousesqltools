@@ -34,8 +34,7 @@ SELECT COUNT(*) FROM [dbo].[DimMedallion];
 SELECT COUNT(*) FROM [dbo].[DimTime] ;
 SELECT COUNT(*) FROM [dbo].[DimWeather];
 SELECT COUNT(*) FROM [dbo].[FactTrip];
-
-select * from [dbo].[vwDimPaymentAnalysis] 
+GO
 
 --create derived Dimension
 CREATE VIEW [dbo].[vwDimPaymentAnalysis] 
